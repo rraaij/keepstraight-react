@@ -5,38 +5,12 @@ const ExpenseForm = (props) => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredAmount, setEnteredAmount] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
-  // const [userInput, setUserInput] = useState({
-  //   enteredTitle: '',
-  //   enteredAmount: '',
-  //   enteredDate: '',
-  // });
+  const [showForm, setShowForm] = useState(false);
 
-  const titleChangeHandler = (event) => {
-    setEnteredTitle(event.target.value);
-    // setUserInput({
-    //   ...userInput,
-    //   enteredTitle: event.target.value,
-    // });
-    // setUserInput((prevState) => {
-    //   return { ...prevState, enteredTitle: event.target.value };
-    // });
-  };
-
-  const amountChangeHandler = (event) => {
-    setEnteredAmount(event.target.value);
-    // setUserInput({
-    //   ...userInput,
-    //   enteredAmount: event.target.value,
-    // });
-  };
-
-  const dateChangeHandler = (event) => {
-    setEnteredDate(event.target.value);
-    // setUserInput({
-    //   ...userInput,
-    //   enteredDate: event.target.value,
-    // });
-  };
+  const titleChangeHandler = (event) => setEnteredTitle(event.target.value);
+  const amountChangeHandler = (event) => setEnteredAmount(event.target.value);
+  const dateChangeHandler = (event) => setEnteredDate(event.target.value);
+  const showFormHandler = () => setShowForm(!showForm);
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -51,7 +25,18 @@ const ExpenseForm = (props) => {
     setEnteredTitle("");
     setEnteredAmount("");
     setEnteredDate("");
+    setShowForm(!showForm);
   };
+
+  if (!showForm) {
+    return (
+      <div className="new-expense__controls">
+        <button type="button" onClick={showFormHandler}>
+          Add New Expense
+        </button>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={submitHandler}>
@@ -86,6 +71,9 @@ const ExpenseForm = (props) => {
         </div>
       </div>
       <div className="new-expense__actions">
+        <button type="reset" onClick={showFormHandler}>
+          Cancel
+        </button>
         <button type="submit">Add Expense</button>
       </div>
     </form>
