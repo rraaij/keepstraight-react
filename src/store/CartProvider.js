@@ -1,6 +1,5 @@
 import CartContext from "./cart-context";
 import { useReducer } from "react";
-import { act } from "react-dom/test-utils";
 
 const defaultCartState = {
   items: [],
@@ -38,7 +37,7 @@ const cartReducer = (state, action) => {
       (item) => item.id === action.id
     );
     const existingItem = state.items[existingCartItemIndex];
-    const updatedTotalAmount = state.amount - existingItem.price;
+    const updatedTotalAmount = state.totalAmount - existingItem.price;
     let updatedItems;
     if (existingItem.amount === 1) {
       updatedItems = state.items.filter((item) => item.id !== action.id);
