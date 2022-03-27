@@ -1,0 +1,7 @@
+{
+  "name": "keepstraight",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
