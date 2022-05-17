@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from "react";
-import {Game, Score, Setup} from "../models/game";
+import { Game, Score, Setup } from "../models/game";
 
 type GameContextObj = {
   setup: Setup | undefined;
@@ -36,9 +36,7 @@ const GameContextProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   return (
-    <GameContext.Provider value={contextValue}>
-      {children}
-    </GameContext.Provider>
+    <GameContext.Provider value={contextValue}>{children}</GameContext.Provider>
   );
 };
 
