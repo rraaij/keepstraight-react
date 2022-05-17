@@ -1,13 +1,11 @@
-import NewTodo from "./components/NewTodo";
-import Todos from "./components/Todos";
-import TodosContextProvider from "./store/todos-context";
+import GameSetup from "./components/GameSetup";
+import GameContextProvider from "./store/game-context";
 
 function App() {
   return (
-    <TodosContextProvider>
-      <NewTodo />
-      <Todos />
-    </TodosContextProvider>
+    <GameContextProvider>
+      <GameSetup />
+    </GameContextProvider>
   );
 }
 
