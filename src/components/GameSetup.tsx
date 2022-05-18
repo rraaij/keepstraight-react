@@ -3,22 +3,11 @@ import React, { SyntheticEvent, useContext, useRef, useState } from "react";
 import { GameContext } from "../store/game-context";
 import classes from "./GameSetup.module.css";
 import { PlayerEnum, Setup } from "../models/game";
-import {
-  Button,
-  ButtonGroup,
-  Card,
-  CardBody,
-  CardSubtitle,
-  CardTitle,
-  Col,
-  Form,
-  FormGroup,
-  Input,
-  Label,
-} from "reactstrap";
+import { useNavigate } from "react-router-dom";
 
 const GameSetup: React.FC = () => {
   const gameCtx = useContext(GameContext);
+  const navigate = useNavigate();
 
   const playerOneInputRef = useRef<HTMLInputElement>(null);
   const playerTwoInputRef = useRef<HTMLInputElement>(null);
@@ -27,12 +16,9 @@ const GameSetup: React.FC = () => {
     useState<PlayerEnum>(PlayerEnum.PLAYER_ONE);
 
   const startingPlayerHandler = (event: SyntheticEvent) => {
-    const selectedValue = (event.target as HTMLInputElement).innerText;
-    setSelectedStartingPlayer(() => {
-      return selectedValue === "Player One"
-        ? PlayerEnum.PLAYER_ONE
-        : PlayerEnum.PLAYER_TWO;
-    });
+    setSelectedStartingPlayer(
+      () => (event.target as HTMLInputElement).value as PlayerEnum
+    );
   };
 
   const submitHandler = (event: React.FormEvent) => {
@@ -45,71 +31,44 @@ const GameSetup: React.FC = () => {
       startingPlayer: selectedStartingPlayer,
     };
     gameCtx.startGame(setupInfo);
+    navigate("/game", { replace: true });
   };
 
   return (
-    <Card className={classes.setupCard}>
-      <CardBody>
-        <CardTitle tag="h5">Game Setup</CardTitle>
-        <CardSubtitle className="mb-2 text-muted" tag="h6">
-          Enter some info to get started!
-        </CardSubtitle>
-        <Form onSubmit={submitHandler}>
-          <FormGroup row>
-            <Label htmlFor="player-one" sm="3">
-              Player One
-            </Label>
-            <Col sm="9">
-              <Input type="text" id="player-one" innerRef={playerOneInputRef} />
-            </Col>
-          </FormGroup>
-          <FormGroup row>
-            <Label htmlFor="player-two" sm="3">
-              Player Two
-            </Label>
-            <Col sm="9">
-              <Input type="text" id="player-two" innerRef={playerTwoInputRef} />
-            </Col>
-          </FormGroup>
-          <FormGroup row>
-            <Label htmlFor="target-score" sm="3">
-              Target Score
-            </Label>
-            <Col sm="9">
-              <Input
-                type="number"
-                id="target-score"
-                innerRef={targetScoreInputRef}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup row>
-            <Label htmlFor="starting-player" sm="3">
-              Starting player
-            </Label>
-            <ButtonGroup sm="9">
-              <Button
-                color="primary"
-                active={selectedStartingPlayer === PlayerEnum.PLAYER_ONE}
-                onClick={startingPlayerHandler}
-              >
-                Player One
-              </Button>
-              <Button
-                color="primary"
-                active={selectedStartingPlayer === PlayerEnum.PLAYER_TWO}
-                onClick={startingPlayerHandler}
-              >
-                Player Two
-              </Button>
-            </ButtonGroup>
-          </FormGroup>
-          <Button color="danger" className={classes.setupButton}>
-            Start Game
-          </Button>
-        </Form>
-      </CardBody>
-    </Card>
+    <React.Fragment>
+      <h3>Game Setup</h3>
+      <h6 className="mb-2 text-muted">Enter some info to get started!</h6>
+      <form onSubmit={submitHandler}>
+        <label htmlFor="player-one">Player One</label>
+        <input type="text" id="player-one" ref={playerOneInputRef} />
+        <label htmlFor="player-two">Player Two</label>
+        <input type="text" id="player-two" ref={playerTwoInputRef} />
+        <label htmlFor="target-score">Target Score</label>
+        <input type="number" id="target-score" ref={targetScoreInputRef} />
+        <label htmlFor="starting-player">Starting player</label>
+        <div>
+          <label>Player One</label>
+          <input
+            type="radio"
+            value={PlayerEnum.PLAYER_ONE}
+            checked={selectedStartingPlayer === PlayerEnum.PLAYER_ONE}
+            onChange={startingPlayerHandler}
+          />
+        </div>
+        <div>
+          <label>Player Two</label>
+          <input
+            type="radio"
+            value={PlayerEnum.PLAYER_TWO}
+            checked={selectedStartingPlayer === PlayerEnum.PLAYER_TWO}
+            onChange={startingPlayerHandler}
+          />
+        </div>
+        <button color="danger" className={classes.setupButton}>
+          Start Game
+        </button>
+      </form>
+    </React.Fragment>
   );
 };
 
