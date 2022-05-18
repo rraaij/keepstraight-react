@@ -44,3 +44,10 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## TECHSTACK
+- React Router v6
+- [MobX](https://mobx.js.org/README.html)
+- [React Query](https://react-query.tanstack.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [MUI component lib](https://mui.com/material-ui/getting-started/installation/)

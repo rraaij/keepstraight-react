@@ -1,14 +1,22 @@
-import GameSetup from "./components/GameSetup";
+import React from "react";
 import GameContextProvider from "./store/game-context";
-import Game from "./components/Game";
+import { Link, Outlet } from "react-router-dom";
 
-function App() {
+const App: React.FC = () => {
   return (
     <GameContextProvider>
-      <GameSetup />
-      <Game />
+      <h1>Keepstraight</h1>
+      <nav
+        style={{
+          borderBottom: "solid 1px",
+          paddingBottom: "1rem",
+        }}
+      >
+        <Link to="/setup">Setup</Link> | <Link to="/game">Game</Link>
+      </nav>
+      <Outlet />
     </GameContextProvider>
   );
-}
+};
 
 export default App;
